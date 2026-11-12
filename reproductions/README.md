@@ -38,14 +38,19 @@ uv run babeldoc \
   --files pml-page-one.pdf \
   --output /tmp/babeldoc-toc-repro \
   --debug \
-  --only-parse-generate-pdf \
+  --skip-translation \
   --skip-scanned-detection
 ```
 
-`--only-parse-generate-pdf` skips translation; the dummy key is not a credential
-and no translation request is required. Inspect the debug paragraph-finding
-and style-processing snapshots to check the entry boundaries. This does not
-test translation quality, dot-leader redrawing, or page-number alignment.
+`--skip-translation` keeps layout analysis, paragraph finding, and style
+processing enabled while skipping translation and glossary extraction. The
+dummy key is not a credential and no translation request is required. Do not
+substitute `--only-parse-generate-pdf`: it also bypasses paragraph finding
+and would not exercise this bug.
+
+Inspect the debug paragraph-finding and style-processing snapshots to check
+the entry boundaries. This does not test translation quality, dot-leader
+redrawing, or page-number alignment.
 
 This reproduction lives on a separate fork branch so the upstream source
 patch does not need to add a third-party PDF fixture.
